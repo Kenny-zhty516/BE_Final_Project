@@ -1,0 +1,5 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/go",
+  "forwardPorts": [3000],
+  "name": "ms-go-devcontainer"
+}
