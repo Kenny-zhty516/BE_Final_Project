@@ -20,21 +20,25 @@ class APIGConstruct(Construct):
         **kwargs
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
-        api_gateway = api_gw.LambdaRestApi(
-            self, 'Endpoint',
+        api = api_gw.LambdaRestApi(
+            self, 'Greetings',
             handler=props.lambda_func,
             api_key_source_type=api_gw.ApiKeySourceType.HEADER,
         )
+        api.root.add_method("GET", api_key_required=True)
+        proxy = api.root.get_resource("{proxy+}")
+        proxy.add_method("GET", api_key_required=True)
 
-        plan = api_gateway.add_usage_plan("UsagePlan",
+        apiKey = api_gw.ApiKey(self, "GreetingApiKey")
+
+        plan = api.add_usage_plan("UsagePlan",
             name="Easy",
             throttle=api_gw.ThrottleSettings(
                 rate_limit=10,
                 burst_limit=2
             )
         )
+        plan.add_api_stage(api=api, stage=api.deployment_stage)
+        plan.add_api_key(apiKey)
 
-        key = api_gateway.add_api_key("ApiKey")
-        plan.add_api_key(key)
-
-        self.api_gateway = api_gateway
+        self.api = api
