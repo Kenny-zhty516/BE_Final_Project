@@ -102,7 +102,7 @@ class GreetingServiceConstruct(Construct):
                 # 1.  curl -f http://localhost:8080/
                 # 2.  wget --no-verbose --tries=1 --spider http://localhost:8080/
                 # Base image for greeting-servers is Alpine and does not have `curl` installed
-                command=["CMD-SHELL", " wget --no-verbose --tries=1 --spider http://localhost:8080/ || exit 1"],
+                command=["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/ || exit 1"],
                 # the properties below are optional
                 interval=Duration.minutes(1),
                 retries=3,
