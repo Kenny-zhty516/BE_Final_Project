@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  dynamodb-local:
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    image: "amazon/dynamodb-local:latest"
+    container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./dynamodb-local/data:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+    networks:
+      - local-dev-network
+
+  dynamodb-setup:
+    image: amazon/aws-cli
+    container_name: dynamodb-setup
+    volumes:
+      - "./dynamodb-local/create-table.sh:/create-table.sh"
+    entrypoint: ["/bin/sh", "/create-table.sh"]
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=dummy # Dummy AWS access key (local testing only)
+      - AWS_SECRET_ACCESS_KEY=dummy # Dummy AWS secret key (local testing only)
+    depends_on:
+      - "dynamodb-local"
+    networks:
+      - local-dev-network
+
+  greeting-http-server:
+    build:
+      context: ./greeting_http_server
+    container_name: greeting-http-server
+    depends_on:
+      - dynamodb-local
+    networks:
+      - local-dev-network
+
+  greeting-lambda:
+    build:
+      context: ./greeting_lambda
+    container_name: greeting-lambda
+    ports:
+      - "9000:8080"
+    entrypoint: "/usr/local/bin/aws-lambda-rie"
+    environment:
+      - AWS_LAMBDA_RUNTIME_API="localhost:8080"
+      - DYNAMODB_LOCAL_ENDPOINT=http://dynamodb-local:8000
+    command: ["./main"]
+    depends_on:
+      - dynamodb-local
+    networks:
+      - local-dev-network
+
+networks:
+  local-dev-network:
+    driver: bridge

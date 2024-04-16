@@ -1,57 +1,28 @@
 # Welcome to your CDK Python project!
 
-This is a blank project for CDK development with Python.
+## Local dev testing
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+Use Docker Compose to start a local development and testing environment.
 
-This project is set up like a standard Python project.  The initialization
-process also creates a virtualenv within this project, stored under the `.venv`
-directory.  To create the virtualenv it assumes that there is a `python3`
-(or `python` for Windows) executable in your path with access to the `venv`
-package. If for any reason the automatic creation of the virtualenv fails,
-you can create the virtualenv manually.
-
-To manually create a virtualenv on MacOS and Linux:
-
-```
-$ python3 -m venv .venv
+```bash
+cd local_dev
+make
 ```
 
-After the init process completes and the virtualenv is created, you can use the following
-step to activate your virtualenv.
+## List tables in local DynamoDB
 
-```
-$ source .venv/bin/activate
-```
-
-If you are a Windows platform, you would activate the virtualenv like this:
-
-```
-% .venv\Scripts\activate.bat
+```bash
+aws dynamodb list-tables --endpoint-url http://localhost:8000
 ```
 
-Once the virtualenv is activated, you can install the required dependencies.
+## List items in a given table in local DynamoDB
 
-```
-$ pip install -r requirements.txt
-```
-
-At this point you can now synthesize the CloudFormation template for this code.
-
-```
-$ cdk synth
+```bash
+aws dynamodb scan --table-name GreetingMessage --endpoint-url http://localhost:8000
 ```
 
-To add additional dependencies, for example other CDK libraries, just add
-them to your `setup.py` file and rerun the `pip install -r requirements.txt`
-command.
+## Invoke Lambda locally
 
-## Useful commands
-
- * `cdk ls`          list all stacks in the app
- * `cdk synth`       emits the synthesized CloudFormation template
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk docs`        open CDK documentation
-
-Enjoy!
+```bash
+curl "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"id": "1234", "name": "Amos"}'
+```
