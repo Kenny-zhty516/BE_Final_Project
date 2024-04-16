@@ -24,5 +24,14 @@ aws dynamodb scan --table-name GreetingMessage --endpoint-url http://localhost:8
 ## Invoke Lambda locally
 
 ```bash
-curl "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"id": "1234", "name": "Amos"}'
+curl "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"body":"{\"id\":\"123\",\"name\":\"test\"}"}'
 ```
+
+Should see response
+
+```
+{"statusCode":200,"headers":null,"multiValueHeaders":null,"body":"Item with ID 123 added."}
+```
+
+Verify by doing a scan on the table.
+

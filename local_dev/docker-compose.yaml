@@ -47,6 +47,10 @@ services:
     environment:
       - AWS_LAMBDA_RUNTIME_API="localhost:8080"
       - DYNAMODB_LOCAL_ENDPOINT=http://dynamodb-local:8000
+      - DYNAMODB_TABLE_NAME=GreetingMessage
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=dummy # Dummy AWS access key (local testing only)
+      - AWS_SECRET_ACCESS_KEY=dummy # Dummy AWS secret key (local testing only)
     command: ["./main"]
     depends_on:
       - dynamodb-local
