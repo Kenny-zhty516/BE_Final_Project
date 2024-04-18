@@ -32,6 +32,12 @@ services:
     build:
       context: ./greeting_http_server
     container_name: greeting-http-server
+    ports:
+      - "9010:8080"
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=dummy # Dummy AWS access key (local testing only)
+      - AWS_SECRET_ACCESS_KEY=dummy # Dummy AWS secret key (local testing only)
     depends_on:
       - dynamodb-local
     networks:

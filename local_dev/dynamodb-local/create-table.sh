@@ -5,7 +5,7 @@
 # Wait for DynamoDB Local to start listening on port 8000
 while ! curl -s --connect-timeout 1 http://dynamodb-local:8000 > /dev/null; do
     echo "Waiting for service on port 8000..."
-    sleep 1  # Wait for 100ms before checking again
+    sleep 1  # Wait for 1s before checking again
 done
 
 echo "DynamoDB Local is up and running."
