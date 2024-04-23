@@ -14,7 +14,7 @@ import (
 )
 
 type DynamoDBClient struct {
-	svc *dynamodb.Client
+	SVC *dynamodb.Client
 }
 
 func NewDynamoDBClient() *DynamoDBClient {
@@ -34,15 +34,15 @@ func NewDynamoDBClient() *DynamoDBClient {
 		log.Fatalf("unable to load SDK config, %v", err)
 	}
 
-	svc := dynamodb.NewFromConfig(sdkConfig)
+	SVC := dynamodb.NewFromConfig(sdkConfig)
 
-	return &DynamoDBClient{svc: svc}
+	return &DynamoDBClient{SVC: SVC}
 }
 
 func (d *DynamoDBClient) ScanItems() ([]model.GreetingMessage, error) {
 	var items []model.GreetingMessage
 
-	data, err := d.svc.Scan(context.TODO(), &dynamodb.ScanInput{
+	data, err := d.SVC.Scan(context.TODO(), &dynamodb.ScanInput{
 		TableName: aws.String("GreetingMessage"),
 	})
 	if err != nil {
