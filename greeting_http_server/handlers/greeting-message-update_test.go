@@ -2,16 +2,12 @@ package handlers
 
 import (
 	"bytes"
-	"encoding/json"
-	// "http_servers/db"
-	"http_servers/model"
-	"net/http"
-	"net/http/httptest"
 	"testing"
-	// "github.com/stretchr/testify/mock"
-
+	"net/http"
+	"encoding/json"
+	"http_servers/model"
+	"net/http/httptest"
 )
-
 
 func TestUpdateMessage(t *testing.T) {
 	mockClient := &mockDBClient{}

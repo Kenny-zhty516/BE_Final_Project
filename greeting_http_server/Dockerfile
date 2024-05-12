@@ -12,7 +12,6 @@ COPY . .
 
 RUN go build -o /usr/local/bin/http_servers .
 
-
 FROM alpine as running-app
 
 # Copy the built executable from the builder stage

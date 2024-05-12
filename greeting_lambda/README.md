@@ -9,18 +9,6 @@ cd local_dev
 make
 ```
 
-## List tables in local DynamoDB
-
-```bash
-aws dynamodb list-tables --endpoint-url http://localhost:8000
-```
-
-## List items in a given table in local DynamoDB
-
-```bash
-aws dynamodb scan --table-name GreetingMessage --endpoint-url http://localhost:8000
-```
-
 ## Invoke Lambda locally
 
 ```bash
@@ -40,6 +28,6 @@ Verify by doing a scan on the table.
 To create a message using the HTTP server we use the following command.
 
 ```bash
-curl "http://localhost:9010/greeting-message" -d '{"id":"1234","name":"test"}'
+curl "http://localhost:9010/greeting-message" -d '{"id":"1234","name":"test"} -X POST'
 ```
 

@@ -5,9 +5,11 @@ __pycache__
 .venv
 *.egg-info
 
+go.mod
+.embold/
+
 # CDK asset staging directory
 .cdk.staging
 cdk.out
 
 cdk.context.json
-aws_secret_keys

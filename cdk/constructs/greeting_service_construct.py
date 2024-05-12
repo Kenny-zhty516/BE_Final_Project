@@ -5,7 +5,8 @@ from aws_cdk import (
     aws_ecs_patterns as ecsp,
 )
 from constructs import Construct
-
+VPC_ID = "vpc-05a95664281543ea3"
+# VPC_ID = "vpc-0ddeab84c11dcca89"
 
 class GreetingServiceConstruct(Construct):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
@@ -33,7 +34,7 @@ class GreetingServiceConstruct(Construct):
         """
         Prepares VPC with endpoints for private connection from Fargate
         """
-        vpc = ec2.Vpc.from_lookup(self, "vpc", vpc_id="vpc-0389a43d358070d2d")
+        vpc = ec2.Vpc.from_lookup(self, "vpc", vpc_id=VPC_ID)
         return vpc
 
     def _prepare_vpc_endpoints(self, vpc: ec2.IVpc, private_subnet: ec2.PrivateSubnet):

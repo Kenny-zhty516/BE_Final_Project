@@ -4,9 +4,6 @@ go 1.21.3
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.26.1
-	github.com/aws/aws-sdk-go-v2/config v1.27.11
-	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.13.13
-	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.31.1
 	github.com/gorilla/mux v1.8.1
 )
 
@@ -23,6 +20,17 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sso v1.20.5 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.23.4 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.28.6 // indirect
-	github.com/aws/smithy-go v1.20.2 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/stretchr/objx v0.5.2 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
+)
+
+require (
+	github.com/aws/aws-sdk-go-v2/config v1.27.11
+	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.13.13
+	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.31.1
+	github.com/aws/smithy-go v1.20.2 // indirect
+	github.com/stretchr/testify v1.9.0
 )
