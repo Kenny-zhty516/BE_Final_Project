@@ -8,7 +8,7 @@ from cdk.greeting_stack import GreetingStack
 
 app = cdk.App()
 GreetingStack(app, "GreetingStack",
-    env=cdk.Environment(account='480763985297', region='us-east-1'),
+    env=cdk.Environment(account='173572369239', region='us-east-1'),
 )
 
 app.synth()
