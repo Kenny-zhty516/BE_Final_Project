@@ -33,7 +33,7 @@ class GreetingServiceConstruct(Construct):
         """
         Prepares VPC with endpoints for private connection from Fargate
         """
-        vpc = ec2.Vpc.from_lookup(self, "vpc", vpc_id="vpc-0ddeab84c11dcca89")
+        vpc = ec2.Vpc.from_lookup(self, "vpc", vpc_id="vpc-0389a43d358070d2d")
         return vpc
 
     def _prepare_vpc_endpoints(self, vpc: ec2.IVpc, private_subnet: ec2.PrivateSubnet):
