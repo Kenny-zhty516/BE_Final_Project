@@ -1,34 +1,41 @@
 package handlers
 
 import (
+	"encoding/json"
+	"http_servers/model"
+	"log"
 	"net/http"
-	"context"
-	"os"
 
-	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
+	"github.com/gorilla/mux"
 )
 
 func UpdateMessage(w http.ResponseWriter, r *http.Request) {
-	// Implementation of Update item in DynamoDB
+	log.Println("received update messages request")
 
-	Id := r.URL.Query().Get("ID")
-	Name := r.URL.Query().Get("Name")
 
-	tableName := os.Getenv("DYNAMODB_TABLE_NAME")
+	// Extract ID from URL path parameters
+	vars := mux.Vars(r)
+	id := vars["id"]
 
-	input := &dynamodb.UpdateItemInput{
-		TableName: aws.String(tableName),
-		Key: map[string]types.AttributeValue{
-			"ID":   &types.AttributeValueMemberS{Value: Id},
-			"Name": &types.AttributeValueMemberS{Value: Name},
-		},
-	}
+	// Unmarshal
+	var message model.GreetingMessage
+	decoder := json.NewDecoder(r.Body)
+	decoder.DisallowUnknownFields()
+	err := decoder.Decode(&message)
 
-	_, err := dbClient.SVC.UpdateItem(context.TODO(), input)
 	if err != nil {
-		http.Error(w, "Failed to put item to DynamoDB", http.StatusInternalServerError)
+		log.Printf("Unmarshal request to JSON failed with error: %v", err)
+		http.Error(w, "Failed to decode request body to JSON", http.StatusInternalServerError)
 		return
 	}
+
+	err = dbClient.UpdateItem(id, message.Name)
+	if err != nil {
+		log.Printf("update message failed with error: %v", err)
+		http.Error(w, "Failed to updated message", http.StatusInternalServerError)
+		return
+	}
+	// log.Printf("updated message with id: %v, name: %v", message.ID, message.Name)
+	log.Printf("updated message with id: %v", id)
+	
 }
